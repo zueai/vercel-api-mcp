@@ -23,7 +23,7 @@ bun create mcp --clone https://github.com/zueai/vercel-api-mcp
 3. (Optional) Upload any secrets:
 
 ```bash
-bunx wrangler secret put MY_API_KEY
+bunx wrangler secret put VERCEL_API_TOKEN
 ```
 
 ## Deploying Changes
