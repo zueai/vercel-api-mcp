@@ -20,7 +20,7 @@ bun create mcp --clone https://github.com/zueai/vercel-api-mcp
 
 2. Open `Cursor Settings -> MCP -> Add new MCP server` and paste the command that was copied to your clipboard.
 
-3. (Optional) Upload any secrets:
+3. Upload your [Vercel API token](https://vercel.com/account/tokens) as a secret:
 
 ```bash
 bunx wrangler secret put VERCEL_API_TOKEN
