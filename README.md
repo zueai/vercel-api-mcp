@@ -2,9 +2,7 @@
 
 This is a lightweight Model Control Protocol (MCP) server bootstrapped with [create-mcp](https://github.com/zueai/create-mcp), and deployed on Cloudflare Workers.
 
-This MCP server allows AI agents (such as Cursor) to use the functions in [src/index.ts](src/index.ts) as MCP tools.
-
-This MCP server allows agents (such as Cursor) to interface with the [Cloudflare REST API](https://developers.cloudflare.com/api/).
+This MCP server allows AI agents (such as Cursor) to use the functions in [src/index.ts](src/index.ts) as MCP tools to interface with the [Vercel API](https://vercel.com/docs/api).
 
 It's still under development, I will be adding more tools as I find myself needing them.
 
@@ -69,3 +67,4 @@ Check out the following resources to learn more:
 - [Model Control Protocol Documentation](https://modelcontextprotocol.io) - learn about the model control protocol
 - [workers-mcp](https://github.com/cloudflare/workers-mcp) - the package that implements the MCP protocol for Cloudflare Workers
 - [Cloudflare Workers documentation](https://developers.cloudflare.com/workers/) - learn about the Cloudflare Workers platform
+- [Vercel API Documentation](https://vercel.com/docs/api) - learn about the Vercel API
