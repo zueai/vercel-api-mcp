@@ -2,4 +2,5 @@
 
 interface Env {
 	SHARED_SECRET: string;
+	VERCEL_API_TOKEN: string;
 }

@@ -164,3 +164,7 @@ Most of your implementation files (like `cloudflare/zones.ts`) should handle the
 ## Deployment
 
 Run `bun run deploy` to deploy your changes to Cloudflare Workers.
+
+## Vercel SDK Docs
+
+You can read the documentation for any sdk method by searching the `vercel-sdk-docs` folder.
