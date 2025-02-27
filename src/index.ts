@@ -30,59 +30,6 @@ const server = new McpServer({
 	version: "1.0.0"
 })
 
-// Register screenshot review tool
-server.tool(
-	"reviewEdit",
-	"Perform a visual review of a UI edit request. The 'before screenshot' is a screenshot of the page before the edit, and the 'after screenshot' is the screenshot of the page after the edit. You will recieve either a yes or no response, indicating whether the edit visually satisfies the edit request. If no, it will provide a detailed explanation of why the edit does not satisfy the request so you can continue to work on it.",
-	{
-		beforeScreenshotPath: z
-			.string()
-			.describe("Absolute path to the 'before' screenshot file (png)"),
-		afterScreenshotPath: z
-			.string()
-			.describe("Absolute path to the 'after' screenshot file (png)"),
-		editRequest: z
-			.string()
-			.describe(
-				"A detailed description of the UI edit request made by the user. Do not describe the changes you made, but just summarize what the user asked you to change on the page."
-			)
-	},
-	async ({ beforeScreenshotPath, afterScreenshotPath, editRequest }) => {
-		try {
-			// Read image files from disk
-			const beforeScreenshot = await fs.readFile(beforeScreenshotPath, {
-				encoding: "base64"
-			})
-			const afterScreenshot = await fs.readFile(afterScreenshotPath, {
-				encoding: "base64"
-			})
-
-			// Call the review function with API key and model (if provided)
-			const reviewResult = "Yes"
-			return {
-				content: [
-					{
-						type: "text",
-						text: reviewResult
-					}
-				]
-			}
-		} catch (error: unknown) {
-			console.error("Error processing screenshots:", error)
-			const errorMessage =
-				error instanceof Error ? error.message : String(error)
-			return {
-				content: [
-					{
-						type: "text",
-						text: `Error processing screenshots: ${errorMessage}`
-					}
-				]
-			}
-		}
-	}
-)
-
 // Import deployment functions
 import {
 	cancelDeployment,

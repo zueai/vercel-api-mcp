@@ -13,7 +13,6 @@ export async function getDeploymentEvents(
 	deploymentId: string,
 	options?: {
 		direction?: "forward" | "backward"
-		follow?: number
 		limit?: number
 		name?: string
 		since?: number
@@ -25,16 +24,41 @@ export async function getDeploymentEvents(
 		slug?: string
 	}
 ) {
-	const vercel = new Vercel({
-		bearerToken: env.VERCEL_API_TOKEN
+	// Construct the URL for the Vercel API endpoint
+	let url = `https://api.vercel.com/v3/deployments/${deploymentId}/events`
+
+	// Create the query parameters
+	const params = new URLSearchParams()
+	params.append("follow", "0") // Always set follow=0 as requested
+
+	// Add other optional parameters
+	if (options?.direction) params.append("direction", options.direction)
+	if (options?.limit) params.append("limit", options.limit.toString())
+	if (options?.name) params.append("name", options.name)
+	if (options?.since) params.append("since", options.since.toString())
+	if (options?.until) params.append("until", options.until.toString())
+	if (options?.statusCode) params.append("statusCode", options.statusCode)
+	if (options?.delimiter)
+		params.append("delimiter", options.delimiter.toString())
+	if (options?.builds) params.append("builds", options.builds.toString())
+	if (options?.teamId) params.append("teamId", options.teamId)
+	if (options?.slug) params.append("slug", options.slug)
+
+	// Append the query parameters to the URL
+	url = `${url}?${params.toString()}`
+
+	// Make the fetch request
+	const response = await fetch(url, {
+		headers: {
+			Authorization: `Bearer ${env.VERCEL_API_TOKEN}`,
+			"Content-Type": "application/json"
+		}
 	})
 
-	const response = await vercel.deployments.getDeploymentEvents({
-		idOrUrl: deploymentId,
-		...options
-	})
+	// Parse the response as JSON
+	const data = await response.json()
 
-	return MCPResponse(response)
+	return MCPResponse(data)
 }
 
 /**
