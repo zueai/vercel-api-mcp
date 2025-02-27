@@ -8,8 +8,11 @@
 		"strict": true,
 		"esModuleInterop": true,
 		"skipLibCheck": true,
-		"forceConsistentCasingInFileNames": true
+		"forceConsistentCasingInFileNames": true,
+		"paths": {
+			"@/*": ["./src/*"]
+		}
 	},
-	"include": ["src/**/*"],
+	"include": ["src/**/*", "app.d.ts"],
 	"exclude": ["node_modules"]
 }

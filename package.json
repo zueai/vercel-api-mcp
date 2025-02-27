@@ -1,11 +1,12 @@
 {
-	"name": "vercel-api-mcp",
+	"name": "vercel-mcp",
 	"description": "An MCP server that connects to Vercel API",
 	"module": "index.ts",
 	"bin": {
 		"vercel-api-mcp": "./build/index.js"
 	},
 	"files": ["build"],
+	"type": "module",
 	"scripts": {
 		"build": "tsc && node -e \"require('fs').chmodSync('build/index.js', '755')\"",
 		"check": "bunx biome check --write .",

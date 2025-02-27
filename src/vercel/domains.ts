@@ -1,3 +1,4 @@
+import { MCPResponse } from "@/utils.js"
 import { Vercel } from "@vercel/sdk"
 
 /**
@@ -24,14 +25,7 @@ export async function getDomainConfig(
 		...options
 	})
 
-	return {
-		content: [
-			{
-				type: "text",
-				text: JSON.stringify(response, null, 2)
-			}
-		]
-	}
+	return MCPResponse(response)
 }
 
 /**
@@ -58,14 +52,7 @@ export async function getDomain(
 		...options
 	})
 
-	return {
-		content: [
-			{
-				type: "text",
-				text: JSON.stringify(response, null, 2)
-			}
-		]
-	}
+	return MCPResponse(response)
 }
 
 /**
@@ -92,12 +79,5 @@ export async function getDomains(
 		...options
 	})
 
-	return {
-		content: [
-			{
-				type: "text",
-				text: JSON.stringify(response, null, 2)
-			}
-		]
-	}
+	return MCPResponse(response)
 }

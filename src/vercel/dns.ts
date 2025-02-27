@@ -1,3 +1,4 @@
+import { MCPResponse } from "@/utils.js"
 import { Vercel } from "@vercel/sdk"
 
 /**
@@ -27,14 +28,7 @@ export async function getRecords(
 		...options
 	})
 
-	return {
-		content: [
-			{
-				type: "text",
-				text: JSON.stringify(response, null, 2)
-			}
-		]
-	}
+	return MCPResponse(response)
 }
 
 /**
@@ -66,14 +60,7 @@ export async function createRecord(
 		requestBody: recordData
 	})
 
-	return {
-		content: [
-			{
-				type: "text",
-				text: JSON.stringify(response, null, 2)
-			}
-		]
-	}
+	return MCPResponse(response)
 }
 
 /**
@@ -105,14 +92,7 @@ export async function updateRecord(
 		requestBody: recordData
 	})
 
-	return {
-		content: [
-			{
-				type: "text",
-				text: JSON.stringify(response, null, 2)
-			}
-		]
-	}
+	return MCPResponse(response)
 }
 
 /**
@@ -142,12 +122,5 @@ export async function removeRecord(
 		...options
 	})
 
-	return {
-		content: [
-			{
-				type: "text",
-				text: JSON.stringify(response, null, 2)
-			}
-		]
-	}
+	return MCPResponse(response)
 }

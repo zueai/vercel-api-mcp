@@ -1,3 +1,4 @@
+import { MCPResponse } from "@/utils.js"
 import { Vercel } from "@vercel/sdk"
 
 /**
@@ -23,14 +24,7 @@ export async function getProjects(
 		...options
 	})
 
-	return {
-		content: [
-			{
-				type: "text",
-				text: JSON.stringify(response, null, 2)
-			}
-		]
-	}
+	return MCPResponse(response)
 }
 
 /**
@@ -56,18 +50,13 @@ export async function updateProject(
 
 	const response = await vercel.projects.updateProject({
 		idOrName,
-		requestBody: projectData as Record<string, unknown>,
-		...options
+		teamId: options?.teamId,
+		slug: options?.slug,
+		// @ts-ignore
+		requestBody: projectData
 	})
 
-	return {
-		content: [
-			{
-				type: "text",
-				text: JSON.stringify(response, null, 2)
-			}
-		]
-	}
+	return MCPResponse(response)
 }
 
 /**
@@ -102,14 +91,7 @@ export async function getProjectDomains(
 		...options
 	})
 
-	return {
-		content: [
-			{
-				type: "text",
-				text: JSON.stringify(response, null, 2)
-			}
-		]
-	}
+	return MCPResponse(response)
 }
 
 /**
@@ -139,14 +121,7 @@ export async function getProjectDomain(
 		...options
 	})
 
-	return {
-		content: [
-			{
-				type: "text",
-				text: JSON.stringify(response, null, 2)
-			}
-		]
-	}
+	return MCPResponse(response)
 }
 
 /**
@@ -175,18 +150,13 @@ export async function updateProjectDomain(
 	const response = await vercel.projects.updateProjectDomain({
 		idOrName,
 		domain,
-		requestBody: domainData as Record<string, unknown>,
-		...options
+		teamId: options?.teamId,
+		slug: options?.slug,
+		// @ts-ignore
+		requestBody: domainData
 	})
 
-	return {
-		content: [
-			{
-				type: "text",
-				text: JSON.stringify(response, null, 2)
-			}
-		]
-	}
+	return MCPResponse(response)
 }
 
 /**
@@ -216,14 +186,7 @@ export async function removeProjectDomain(
 		...options
 	})
 
-	return {
-		content: [
-			{
-				type: "text",
-				text: JSON.stringify(response, null, 2)
-			}
-		]
-	}
+	return MCPResponse(response)
 }
 
 /**
@@ -258,18 +221,13 @@ export async function addProjectDomain(
 
 	const response = await vercel.projects.addProjectDomain({
 		idOrName,
-		requestBody: domainData,
-		...options
+		teamId: options?.teamId,
+		slug: options?.slug,
+		// @ts-ignore
+		requestBody: domainData
 	})
 
-	return {
-		content: [
-			{
-				type: "text",
-				text: JSON.stringify(response, null, 2)
-			}
-		]
-	}
+	return MCPResponse(response)
 }
 
 /**
@@ -299,14 +257,7 @@ export async function verifyProjectDomain(
 		...options
 	})
 
-	return {
-		content: [
-			{
-				type: "text",
-				text: JSON.stringify(response, null, 2)
-			}
-		]
-	}
+	return MCPResponse(response)
 }
 
 /**
@@ -335,14 +286,7 @@ export async function filterProjectEnvs(
 		...options
 	})
 
-	return {
-		content: [
-			{
-				type: "text",
-				text: JSON.stringify(response, null, 2)
-			}
-		]
-	}
+	return MCPResponse(response)
 }
 
 /**
@@ -373,14 +317,7 @@ export async function getProjectEnv(
 		...options
 	} as { idOrName: string; id: string; teamId?: string; slug?: string })
 
-	return {
-		content: [
-			{
-				type: "text",
-				text: JSON.stringify(response, null, 2)
-			}
-		]
-	}
+	return MCPResponse(response)
 }
 
 /**
@@ -404,49 +341,15 @@ export async function createProjectEnv(
 		bearerToken: env.VERCEL_API_TOKEN
 	})
 
-	// Validate that envData is either an object with key/value or an array of objects with key/value
-	if (typeof envData === "object" && envData !== null) {
-		if (Array.isArray(envData)) {
-			// Check if it's an array of valid env objects
-			for (const env of envData) {
-				if (
-					typeof env !== "object" ||
-					env === null ||
-					!("key" in env) ||
-					!("value" in env)
-				) {
-					throw new Error(
-						"Environment variable objects must contain key and value properties"
-					)
-				}
-			}
-		} else if (!("key" in envData) || !("value" in envData)) {
-			throw new Error(
-				"Environment variable object must contain key and value properties"
-			)
-		}
-	} else {
-		throw new Error("envData must be an object or array of objects")
-	}
-
-	// The Vercel SDK has very complex type definitions for environment variables
-	// that are difficult to match exactly. Using 'any' here is a pragmatic solution.
-
 	const response = await vercel.projects.createProjectEnv({
 		idOrName,
-		//biome-ignore lint/suspicious/noExplicitAny: <explanation>
-		requestBody: envData as any,
-		...options
+		teamId: options?.teamId,
+		slug: options?.slug,
+		//biome-ignore lint/suspicious/noExplicitAny: Complex type definitions in SDK
+		requestBody: envData as any
 	})
 
-	return {
-		content: [
-			{
-				type: "text",
-				text: JSON.stringify(response, null, 2)
-			}
-		]
-	}
+	return MCPResponse(response)
 }
 
 /**
@@ -477,14 +380,7 @@ export async function removeProjectEnv(
 		...options
 	} as { idOrName: string; id: string; teamId?: string; slug?: string })
 
-	return {
-		content: [
-			{
-				type: "text",
-				text: JSON.stringify(response, null, 2)
-			}
-		]
-	}
+	return MCPResponse(response)
 }
 
 /**
@@ -514,8 +410,9 @@ export async function editProjectEnv(
 	const response = await vercel.projects.editProjectEnv({
 		idOrName,
 		id: envId,
-		requestBody: envData as Record<string, unknown>,
-		...options
+		teamId: options?.teamId,
+		slug: options?.slug,
+		requestBody: envData as Record<string, unknown>
 	} as {
 		idOrName: string
 		id: string
@@ -524,12 +421,5 @@ export async function editProjectEnv(
 		slug?: string
 	})
 
-	return {
-		content: [
-			{
-				type: "text",
-				text: JSON.stringify(response, null, 2)
-			}
-		]
-	}
+	return MCPResponse(response)
 }

@@ -1,3 +1,4 @@
+import { MCPResponse } from "@/utils.js"
 import { Vercel } from "@vercel/sdk"
 
 /**
@@ -33,14 +34,7 @@ export async function getDeploymentEvents(
 		...options
 	})
 
-	return {
-		content: [
-			{
-				type: "text",
-				text: JSON.stringify(response, null, 2)
-			}
-		]
-	}
+	return MCPResponse(response)
 }
 
 /**
@@ -68,14 +62,7 @@ export async function getDeployment(
 		...options
 	})
 
-	return {
-		content: [
-			{
-				type: "text",
-				text: JSON.stringify(response, null, 2)
-			}
-		]
-	}
+	return MCPResponse(response)
 }
 
 /**
@@ -102,14 +89,7 @@ export async function cancelDeployment(
 		...options
 	})
 
-	return {
-		content: [
-			{
-				type: "text",
-				text: JSON.stringify(response, null, 2)
-			}
-		]
-	}
+	return MCPResponse(response)
 }
 
 /**
@@ -136,14 +116,7 @@ export async function listDeploymentFiles(
 		...options
 	})
 
-	return {
-		content: [
-			{
-				type: "text",
-				text: JSON.stringify(response, null, 2)
-			}
-		]
-	}
+	return MCPResponse(response)
 }
 
 /**
@@ -173,14 +146,7 @@ export async function getDeploymentFileContents(
 		...options
 	})
 
-	return {
-		content: [
-			{
-				type: "text",
-				text: JSON.stringify(response, null, 2)
-			}
-		]
-	}
+	return MCPResponse(response)
 }
 
 /**
@@ -214,14 +180,7 @@ export async function getDeployments(
 		...options
 	})
 
-	return {
-		content: [
-			{
-				type: "text",
-				text: JSON.stringify(response, null, 2)
-			}
-		]
-	}
+	return MCPResponse(response)
 }
 
 /**
@@ -249,12 +208,5 @@ export async function deleteDeployment(
 		...options
 	})
 
-	return {
-		content: [
-			{
-				type: "text",
-				text: JSON.stringify(response, null, 2)
-			}
-		]
-	}
+	return MCPResponse(response)
 }

@@ -1,70 +1,88 @@
-# vercel-api-mcp
+# vercel-mcp
 
-This is a lightweight Model Control Protocol (MCP) server bootstrapped with [create-mcp](https://github.com/zueai/create-mcp), and deployed on Cloudflare Workers.
+An MCP server that connects to Vercel API.
 
-This MCP server allows AI agents (such as Cursor) to interface with the [Vercel API](https://vercel.com/docs/api).
+## Usage
 
-It's still under development, I will be adding more tools as I find myself needing them.
+### Cursor
 
-## Available Tools
+- To install in a project, add the MCP server to your `.cursor/mcp.json`:
 
-See [src/index.ts](src/index.ts) for the current list of tools. Every method in the class is an MCP tool.
+```json
+{
+	"mcpServers": {
+		"frontend-review": {
+			"command": "npx",
+			"args": ["vercel-mcp VERCEL_API_KEY=<YOUR_API_KEY>"],
 
-## Installation
-
-1. Run the automated install script to clone this MCP server and deploy it to your Cloudflare account:
-
-```bash
-bun create mcp --clone https://github.com/zueai/vercel-api-mcp
-```
-
-2. Open `Cursor Settings -> MCP -> Add new MCP server` and paste the command that was copied to your clipboard.
-
-3. Upload your [Vercel API token](https://vercel.com/account/tokens) as a secret:
-
-```bash
-bunx wrangler secret put VERCEL_API_TOKEN
-```
-
-## Deploying Changes
-
-1. Run the deploy script:
-
-```bash
-bun run deploy
-```
-
-2. Then reload your Cursor window to use the updated tools.
-
-## How to create new MCP tools
-
-To create new MCP tools, add methods to the `MyWorker` class in `src/index.ts`. Each function will automatically become an MCP tool that your agent can use.
-
-Example:
-
-```typescript
-/**
- * A warm, friendly greeting from your MCP server.
- * @param name {string} the name of the person we are greeting.
- * @return {string} the contents of our greeting.
- */
-sayHello(name: string) {
-    return `Hello from an MCP Worker, ${name}!`;
+		}
+	}
 }
 ```
 
-The JSDoc comments are important:
+- To install globally, add this command to your Cursor settings:
 
-- First line becomes the tool's description
-- `@param` tags define the tool's parameters with types and descriptions
-- `@return` tag specifies the return value and type
+```bash
+npx vercel-mcp VERCEL_API_KEY=<your-vercel-api-key>
+```
 
-## Learn More
+### Windsurf
 
-Check out the following resources to learn more:
+- Add the MCP server to your `~/.codeium/windsurf/mcp_config.json` file:
 
-- [create-mcp Documentation](https://github.com/zueai/create-mcp) - learn about the create-mcp CLI
-- [Model Control Protocol Documentation](https://modelcontextprotocol.io) - learn about the model control protocol
-- [workers-mcp](https://github.com/cloudflare/workers-mcp) - the package that implements the MCP protocol for Cloudflare Workers
-- [Cloudflare Workers documentation](https://developers.cloudflare.com/workers/) - learn about the Cloudflare Workers platform
-- [Vercel API Documentation](https://vercel.com/docs/api) - learn about the Vercel API
+```json
+{
+	"mcpServers": {
+		"frontend-review": {
+			"command": "npx",
+			"args": ["vercel-mcp VERCEL_API_KEY=<YOUR_API_KEY>"]
+		}
+	}
+}
+```
+
+## Tools
+
+This MCP server provides the following tools for interacting with the Vercel API:
+
+### Deployments
+
+- `getVercelDeploymentEvents` - Get deployment events by deployment ID and build ID
+- `getVercelDeployment` - Get a deployment by ID or URL
+- `cancelVercelDeployment` - Cancel a deployment
+- `listVercelDeploymentFiles` - List deployment files
+- `getVercelDeploymentFileContents` - Get deployment file contents
+- `getVercelDeployments` - List deployments
+- `deleteVercelDeployment` - Delete a deployment
+
+### DNS
+
+- `getVercelDNSRecords` - List DNS records for a domain
+- `createVercelDNSRecord` - Create a DNS record for a domain
+- `updateVercelDNSRecord` - Update a DNS record
+- `deleteVercelDNSRecord` - Delete a DNS record
+
+### Domains
+
+- `getVercelDomainConfig` - Get a Domain's configuration
+- `getVercelDomain` - Get information for a single domain
+- `getVercelDomains` - List all domains for the authenticated user or team
+
+### Projects
+
+- `getVercelProjects` - Retrieve a list of projects
+- `updateVercelProject` - Update an existing project
+- `getVercelProjectDomains` - Retrieve project domains by project id or name
+- `getVercelProjectDomain` - Get a project domain
+- `updateVercelProjectDomain` - Update a project domain
+- `removeVercelProjectDomain` - Remove a domain from a project
+- `addVercelProjectDomain` - Add a domain to a project
+- `verifyVercelProjectDomain` - Verify project domain
+
+### Environment Variables
+
+- `filterVercelProjectEnvs` - Retrieve the environment variables of a project
+- `getVercelProjectEnv` - Retrieve the decrypted value of an environment variable
+- `createVercelProjectEnv` - Create one or more environment variables
+- `removeVercelProjectEnv` - Remove an environment variable
+- `editVercelProjectEnv` - Edit an environment variable
