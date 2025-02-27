@@ -1,5 +1,5 @@
-import { MCPResponse } from "@/utils.js"
 import { Vercel } from "@vercel/sdk"
+import { MCPResponse } from "../utils.js"
 
 /**
  * Gets deployment events by deployment ID and build ID

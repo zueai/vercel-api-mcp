@@ -11,7 +11,7 @@ An MCP server that connects to Vercel API.
 ```json
 {
 	"mcpServers": {
-		"frontend-review": {
+		"vercel": {
 			"command": "npx",
 			"args": ["vercel-mcp VERCEL_API_KEY=<YOUR_API_KEY>"],
 
@@ -33,7 +33,7 @@ npx vercel-mcp VERCEL_API_KEY=<your-vercel-api-key>
 ```json
 {
 	"mcpServers": {
-		"frontend-review": {
+		"vercel": {
 			"command": "npx",
 			"args": ["vercel-mcp VERCEL_API_KEY=<YOUR_API_KEY>"]
 		}

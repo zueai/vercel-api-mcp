@@ -1,11 +1,14 @@
 {
 	"name": "vercel-mcp",
+	"version": "0.0.6",
 	"description": "An MCP server that connects to Vercel API",
 	"module": "index.ts",
 	"bin": {
-		"vercel-api-mcp": "./build/index.js"
+		"vercel-mcp": "./build/index.js"
 	},
-	"files": ["build"],
+	"files": [
+		"build"
+	],
 	"type": "module",
 	"scripts": {
 		"build": "tsc && node -e \"require('fs').chmodSync('build/index.js', '755')\"",
